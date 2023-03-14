@@ -1,12 +1,11 @@
 package org.example;
 
 import org.apache.ibatis.logging.LogFactory;
-import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.RuntimeService;
-import org.camunda.bpm.engine.impl.HistoryLevelSetupCommand;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.extension.process_test_coverage.spring_test.ProcessEngineCoverageConfiguration;
 import org.camunda.bpm.extension.process_test_coverage.spring_test.ProcessEngineCoverageTestExecutionListener;
+import org.example.util.VariableChecker;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +17,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.HashMap;
 
-import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
-
-
-/**
- * Test case starting an in-memory database-backed Process Engine.
- */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @Import({ProcessEngineCoverageConfiguration.class})
@@ -53,8 +46,11 @@ public class ProcessScenarioTest {
         var processes = runtimeService.createConditionEvaluation()
                 .setVariables(varMap)
                 .evaluateStartConditions();
+        variableChecker.check();
 
+        runtimeService.setVariable(processes.get(0).getId(), "v1", V.val2);
         Thread.sleep(15_000);
+
         variableChecker.check();
     }
 }

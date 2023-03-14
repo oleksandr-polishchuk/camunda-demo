@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.8.0">
   <bpmn:process id="camunda-demo" name="camunda-demo" isExecutable="true">
-    <bpmn:sequenceFlow id="SequenceFlow1" sourceRef="StartEvent" targetRef="ServiceTask_Logger" />
     <bpmn:serviceTask id="ServiceTask_Logger" name="Log to console" camunda:asyncBefore="true" camunda:asyncAfter="true" camunda:delegateExpression="${logger}">
       <bpmn:incoming>SequenceFlow1</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow2</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="SequenceFlow2" sourceRef="ServiceTask_Logger" targetRef="EndEvent" />
     <bpmn:endEvent id="EndEvent" name="Request&#10;processed">
-      <bpmn:incoming>SequenceFlow2</bpmn:incoming>
+      <bpmn:incoming>Flow_16sxb3h</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:startEvent id="StartEvent" name="Request&#10;received" camunda:asyncAfter="true">
       <bpmn:outgoing>SequenceFlow1</bpmn:outgoing>
@@ -16,6 +13,14 @@
         <bpmn:condition xsi:type="bpmn:tFormalExpression">${v1 == "val1"}</bpmn:condition>
       </bpmn:conditionalEventDefinition>
     </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow1" sourceRef="StartEvent" targetRef="ServiceTask_Logger" />
+    <bpmn:sequenceFlow id="Flow_16sxb3h" sourceRef="Event_v1" targetRef="EndEvent" />
+    <bpmn:boundaryEvent id="Event_v1" camunda:asyncAfter="true" attachedToRef="ServiceTask_Logger">
+      <bpmn:outgoing>Flow_16sxb3h</bpmn:outgoing>
+      <bpmn:conditionalEventDefinition id="ConditionalEventDefinition_03o5am0" camunda:variableName="v1">
+        <bpmn:condition xsi:type="bpmn:tFormalExpression">${v1 == "val2"}</bpmn:condition>
+      </bpmn:conditionalEventDefinition>
+    </bpmn:boundaryEvent>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="camunda-demo">
@@ -34,6 +39,9 @@
           <dc:Bounds x="171" y="138" width="42" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1s5gthz_di" bpmnElement="Event_v1">
+        <dc:Bounds x="372" y="62" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_08va5r8_di" bpmnElement="SequenceFlow1">
         <di:waypoint x="209" y="120" />
         <di:waypoint x="337" y="120" />
@@ -41,12 +49,11 @@
           <dc:Bounds x="228" y="95" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow2_di" bpmnElement="SequenceFlow2">
-        <di:waypoint x="437" y="120" />
-        <di:waypoint x="556" y="120" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="496.5" y="99" width="0" height="12" />
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNEdge id="Flow_16sxb3h_di" bpmnElement="Flow_16sxb3h">
+        <di:waypoint x="390" y="62" />
+        <di:waypoint x="390" y="42" />
+        <di:waypoint x="574" y="42" />
+        <di:waypoint x="574" y="102" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

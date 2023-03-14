@@ -1,5 +1,7 @@
-package org.example;
+package org.example.util;
 
+import org.example.domain.ActGeByteArray;
+import org.example.domain.ActRuVariable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -19,13 +21,9 @@ public class VariableChecker {
     private JdbcTemplate jdbcTemplate;
 
     public void check() {
-        var variables = jdbcTemplate.query("select * from act_ru_variable", new ActRuVariableMapper());
-        var byteArrays = jdbcTemplate.query("select * from act_ge_bytearray", new ActGeByteArrayMapper());
-        System.out.println("ALL: variables " + variables.size() + ", bytearrays " + byteArrays.size());
-
-
-        variables = jdbcTemplate.query("select * from act_ru_variable where name_ = 'v1'", new ActRuVariableMapper());
-        byteArrays = jdbcTemplate.query("select * from act_ge_bytearray where name_ = 'v1'", new ActGeByteArrayMapper());
+        System.out.println("=========================================================================================");
+        var variables = jdbcTemplate.query("select * from act_ru_variable where name_ = 'v1'", new ActRuVariableMapper());
+        var byteArrays = jdbcTemplate.query("select * from act_ge_bytearray where name_ = 'v1' and type_ != 3", new ActGeByteArrayMapper());
         System.out.println("V1: variables " + variables.size() + ", bytearrays " + byteArrays.size());
 
         var varByBytearrayId = variables.stream().collect(Collectors.toMap(ActRuVariable::getBytearrayId, Function.identity()));
@@ -37,6 +35,7 @@ public class VariableChecker {
                 System.out.println(byteArray);
             }
         }
+        System.out.println("=========================================================================================");
     }
 
     public static class ActGeByteArrayMapper implements RowMapper<ActGeByteArray> {
