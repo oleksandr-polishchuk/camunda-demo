@@ -76,5 +76,6 @@ Camunda Platform: (v7.18.0)
 Camunda Platform Spring Boot Starter: (v7.18.0)
 ```
 
-- Setup for Camunda Platform v7.18.0 is in https://github.com/oleksandr-polishchuk/camunda-demo/tree/v7.18.0 and in https://github.com/oleksandr-polishchuk/camunda-demo/tree/main
-- Setup for Camunda Platform v7.14.0 is in https://github.com/oleksandr-polishchuk/camunda-demo/tree/v7.14.0
+Setup for Camunda Platform v7.18.0 is in https://github.com/oleksandr-polishchuk/camunda-demo/tree/v7.18.0 and in https://github.com/oleksandr-polishchuk/camunda-demo/tree/main
+
+Setup for Camunda Platform v7.14.0 is in https://github.com/oleksandr-polishchuk/camunda-demo/tree/v7.14.0
