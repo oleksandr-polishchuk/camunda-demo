@@ -75,7 +75,14 @@ Spring-Boot:  (v2.7.3)
 Camunda Platform: (v7.18.0)
 Camunda Platform Spring Boot Starter: (v7.18.0)
 ```
+setup is in https://github.com/oleksandr-polishchuk/camunda-demo/tree/v7.18.0 and in https://github.com/oleksandr-polishchuk/camunda-demo/tree/main
 
-Setup for Camunda Platform v7.18.0 is in https://github.com/oleksandr-polishchuk/camunda-demo/tree/v7.18.0 and in https://github.com/oleksandr-polishchuk/camunda-demo/tree/main
+and for:
+```
+Spring-Boot:  (v2.3.0.RELEASE)
+Camunda BPM: (v7.14.0)
+Camunda BPM Spring Boot Starter: (v7.14.0)
+```
+setup is in https://github.com/oleksandr-polishchuk/camunda-demo/tree/v7.14.0
 
-Setup for Camunda Platform v7.14.0 is in https://github.com/oleksandr-polishchuk/camunda-demo/tree/v7.14.0
+probably it can be reproduced for all the versions between 7.14.0 and 7.18.0 as well
