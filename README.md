@@ -47,23 +47,31 @@ So, usage Conditional Start Event + Custom Object (Serializable) Values Variable
 
 ---
 
-There is a simple Process Definition + ProcessScenarioTest + VariableChecker (to take records from `act_hi_varinst` and `act_ge_bytearray`) that will help to reproduce such behaviour:
-- the process is started by condition in `StartEvent` and waiting on ServiceTask_Logger; on this stage we have 1 record in `act_ru_variable` and 2 in `act_ge_bytearray` for variable `v1`
-- the process will be finished once we updated `v1` to activate `Event_v1`; 1 record from `act_ru_variable` and 1 from `act_ge_bytearray` for variable `v1` will be removed as part of cleanup after the process, but 1 record in `act_ge_bytearray` will be stays in the table forever.
+There is a simple Process Definition + ProcessScenarioTest + VariableChecker (to take records from `act_hi_varinst` and `act_ge_bytearray`) that will help to reproduce such behaviour. The process is started by condition in `StartEvent`, log info about variables by `LoggerDelegate` and end:
+- in the middle of the process execution: we have 1 record in `act_ru_variable` and 2 in `act_ge_bytearray` for variable `v1`
+- after the process execution: 1 record from `act_ru_variable` and 1 from `act_ge_bytearray` for variable `v1` will be removed as part of cleanup after the process, but 1 record in `act_ge_bytearray` will be stays in the table forever.
 
 ```
 =========================================================================================
+=========================================================================================
 V1: variables 1, bytearrays 2
-ActRuVariable(id=12, rev=1, type=serializable, name=v1, executionId=10, procInstId=10, procDefId=camunda-demo:1:3, bytearrayId=11, text=null, text2=org.example.V, varScope=10, sequenceCounter=1, concurrentLocal=false, tenantId=null)
-variable 12 -> ActGeByteArray(id=11, rev=1, name=v1, deploymentId=null, generated=null, tenantId=null, type=2, createTime=2023-03-14, rootProcInstId=null, removalTime=null)
-ActGeByteArray(id=9, rev=1, name=v1, deploymentId=null, generated=null, tenantId=null, type=2, createTime=2023-03-14, rootProcInstId=null, removalTime=null)
+ActRuVariable(id=9, rev=1, type=serializable, name=v1, executionId=7, procInstId=7, procDefId=camunda-demo:1:3, bytearrayId=8, text=null, text2=org.example.V, varScope=7, sequenceCounter=1, concurrentLocal=false, tenantId=null)
+ActGeByteArray(id=6, rev=1, name=v1, deploymentId=null, generated=null, tenantId=null, type=2, createTime=2023-03-14, rootProcInstId=null, removalTime=null)
+ActGeByteArray(id=8, rev=1, name=v1, deploymentId=null, generated=null, tenantId=null, type=2, createTime=2023-03-14, rootProcInstId=null, removalTime=null) -> linked to variable 9
 =========================================================================================
 LoggerDelegate was invoked
+...
 =========================================================================================
 V1: variables 0, bytearrays 1
-ActGeByteArray(id=9, rev=1, name=v1, deploymentId=null, generated=null, tenantId=null, type=2, createTime=2023-03-14, rootProcInstId=null, removalTime=null)
+ActGeByteArray(id=6, rev=1, name=v1, deploymentId=null, generated=null, tenantId=null, type=2, createTime=2023-03-14, rootProcInstId=null, removalTime=null)
 =========================================================================================
+
 ```
 
 ---
-The issue reproduced for camunda `7.14.0` (spring boot `2.3.0.RELEASE`) as well as for camunda `7.18.0` (spring boot `2.7.3`)
+The issue reproduced for:
+```
+Spring-Boot:  (v2.7.3)
+Camunda Platform: (v7.18.0)
+Camunda Platform Spring Boot Starter: (v7.18.0)
+```

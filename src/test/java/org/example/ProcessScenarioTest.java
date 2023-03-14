@@ -46,11 +46,8 @@ public class ProcessScenarioTest {
         var processes = runtimeService.createConditionEvaluation()
                 .setVariables(varMap)
                 .evaluateStartConditions();
-        variableChecker.check();
 
-        runtimeService.setVariable(processes.get(0).getId(), "v1", V.val2);
-        Thread.sleep(15_000);
-
+        Thread.sleep(10_000);
         variableChecker.check();
     }
 }
