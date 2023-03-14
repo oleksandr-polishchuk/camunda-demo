@@ -64,3 +64,6 @@ V1: variables 0, bytearrays 1
 ActGeByteArray(id=9, rev=1, name=v1, deploymentId=null, generated=null, tenantId=null, type=2, createTime=2023-03-14, rootProcInstId=null, removalTime=null)
 =========================================================================================
 ```
+
+---
+The issue reproduced for camunda `7.14.0` (spring boot `2.3.0.RELEASE`) as well as for camunda `7.18.0` (spring boot `2.7.3`)
