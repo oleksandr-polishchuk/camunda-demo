@@ -30,7 +30,7 @@ public class VariableChecker {
         variables.forEach(System.out::println);
         for (ActGeByteArray byteArray : byteArrays) {
             if (varByBytearrayId.containsKey(byteArray.getId())) {
-                System.out.println("variable " + varByBytearrayId.get(byteArray.getId()).getId() + " -> " + byteArray);
+                System.out.println(byteArray + " -> linked to variable " + varByBytearrayId.get(byteArray.getId()).getId());
             } else {
                 System.out.println(byteArray);
             }
