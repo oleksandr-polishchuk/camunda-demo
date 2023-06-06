@@ -25,10 +25,10 @@ FROM
     act_ge_bytearray ba
 LEFT JOIN
     act_ru_variable v on ba.id_ = v.bytearray_id_
-LEFT JOIN
-    act_hi_varinst hv on ba.id_ = hv.bytearray_id_
 WHERE
-    v.id_ IS NULL AND hv.id_ IS NULL AND ba.deployment_id_ IS NULL AND ba.name_ != 'job.exceptionByteArray'
+    v.id_ IS NULL
+    AND ba.type_ = 2
+    AND ba.name_ != 'job.exceptionByteArray'
 GROUP BY
     ba.name_
 ORDER BY count(*) DESC;
